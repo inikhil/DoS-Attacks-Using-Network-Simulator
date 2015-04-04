@@ -1,0 +1,57 @@
+set ns [new Simulator]
+
+set tf [open out.tr w]
+$ns trace-all $tf
+
+set namfile [open out.nam w]
+$ns namtrace-all $namfile
+
+set lamda 30.0
+set mu   33.0
+
+set n1 [$ns node]
+set n2 [$ns node]
+
+$ns simplex-link $n1 $n2 100kb 0ms DropTail
+$ns queue-limit $n1 $n2 10000
+
+set iat [new RandomVariable/Exponential]
+$iat set avg_ [expr 1.0/$lamda]
+
+set pktsize [new RandomVariable/Exponential]
+$pktsize set avg_ [expr 10000.0/$mu]
+
+set src [new Agent/UDP]
+$ns attach-agent $n1 $src
+set sink [new Agent/Null]
+$ns attach-agent $n2 $sink
+$ns connect $src $sink
+
+$ns monitor-queue $n1 $n2 [open qm.out w] 0.1
+#$link queue-sample-timeout
+
+proc finish {} {
+	global ns namfile tf
+	$ns flush-trace
+	close $tf
+	close $namfile
+	exec nam out.nam &
+	exit 0
+}
+proc sendpacket {} {
+	global ns src iat pktsize 
+	set time [$ns now]
+	$ns at [ expr $time + [$iat value]] "sendpacket"
+	set bytes [expr round ([$pktsize value])]
+	$src send $bytes
+}
+
+$ns at 0.0001 "sendpacket"
+$ns at 10.0 "finish"
+
+$ns run
+
+
+
+
+
