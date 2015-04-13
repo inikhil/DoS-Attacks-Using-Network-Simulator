@@ -50,9 +50,9 @@ set n4 [$ns node]
 set n5 [$ns node]
 
 # Create links between nodes
-$ns duplex-link $n0 $n2 0.2Mb 100ms DropTail
+$ns duplex-link $n0 $n2 0.5Mb 100ms DropTail
 $ns duplex-link $n1 $n2 0.5Mb 100ms DropTail
-$ns duplex-link $n2 $n3 0.2Mb 100ms DropTail
+$ns duplex-link $n2 $n3 0.3Mb 100ms DropTail
 $ns duplex-link $n3 $n4 0.2Mb 100ms DropTail
 $ns duplex-link $n3 $n5 0.2Mb 100ms DropTail
 
@@ -71,9 +71,9 @@ $ns duplex-link-op $n0 $n2 queuePos 0.5
 $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 # Set Queue Sizes
-$ns queue-limit $n0 $n2 20
+$ns queue-limit $n0 $n2 10
 $ns queue-limit $n1 $n2 15
-$ns queue-limit $n2 $n3 5
+$ns queue-limit $n2 $n3 15
 $ns queue-limit $n3 $n4 5
 
 # Labelling
@@ -180,18 +180,19 @@ proc sendpacket_udp {} {
 	} 
 }
 
-proc sendpacket_tcp {} {
-	global ns tcp1 iat_tcp tcp3 prob
+proc sendpacket_tcp {tm} {
+	global ns tcp1 iat_tcp tcp3 prob sendtime
 	set time [$ns now]
-	$ns at [ expr $time + [$iat_tcp value]] "sendpacket_tcp"
-	set bytes 512
-	if [expr [$prob value] < 0.5] {
-		#puts "1"
-		$tcp1 send $bytes
-	} else {
-		#puts "2"
-		$tcp3 send $bytes
-	} 
+	set sendtime [ expr $time + [$iat_tcp value]]
+	if { $tm > $sendtime } {
+		$ns at $sendtime "sendpacket_tcp $tm"
+		set bytes 512
+		if [expr [$prob value] < 0.5] {
+			$tcp1 send $bytes
+		} else {
+			$tcp3 send $bytes
+		}
+	}	 
 }
 
 
@@ -210,10 +211,14 @@ proc sendpacket_tcp {} {
 #$ns at 10.0 "$poisson stop"
 
 $ns at 0.0001 "sendpacket_udp"
-$ns at 2.0001 "sendpacket_tcp"
+$ns at 10.0001 "sendpacket_tcp 40"
+$ns at 60.0000 "sendpacket_tcp 90"
+#$ns at 90.0001 "$tcp1 stop"
+#$ns at 90.0001 "$tcp3 stop"
 
+ 
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 7.0 "finish"
+$ns at 100.0 "finish"
 
 
 
