@@ -1,38 +1,37 @@
 BEGIN {
+recv=1;
 dropped=0;
-received=0.1;
-calc = 0;
+gotime = 1;
+time = 0;
+time_interval=1;
 }
+#body
 {
-parameter1=$1
-parameter2=$2
-parameter3=$3
-parameter4=$4
-parameter5=$5
-parameter6=$6
-parameter8=$8
-parameter9=$9
-parameter10=$10
-parameter11=$11
-parameter12=$12
-if (parameter1=="r" && parameter5=="udp" && parameter4==3 && parameter3==2)
-received++;
+    event = $1
+    time = $2
+    node_id = $4
+    pktsize = $6
+    pktType = $5
+	if(time > gotime)
+	{
+		print gotime, (dropped/(dropped+recv)); 
+ 		gotime+= time_interval;
+  		recv=1;
+		dropped=0;
+  	}
+	if (( event == "d") && ( pktType == "udp" ) && (node_id == 3))
+	{
+ 		dropped++;
+	}
+	if (( event == "r") && ( pktType == "udp" ) && (node_id == 3))
+	{
+ 		recv++;
+	}
+	
 
-if (parameter1=="d" && parameter5=="udp" && parameter4==3 && parameter3==2)
-dropped++;
-
-calc = dropped/(dropped+received)
-
-#if ((parameter2 > 40 && parameter2 < 60) || parameter2 > 90 ){
-#	received=1;
-#	dropped=0;
-#}
-
-printf("\n%f %f",parameter2,calc);
-
-
-}
+} #body
 END {
-#printf("\n\n\nnumber of pkts received :%d",number_of_received);
+;
 }
+#============================= Ends ============================
 

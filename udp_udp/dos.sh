@@ -57,7 +57,8 @@ gnuplot << EOF
 	set title "Probability of packet being dropped"
 	#set xrange [0:100]
 	#set yrange [0:0.25]
-	plot "drop.dat" lt 3 lc 3 
+	set style data linespoints
+	plot "drop.dat"
 EOF
 
 

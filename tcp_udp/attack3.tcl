@@ -23,8 +23,8 @@ proc finish {} {
 	exit 0
 }
 
-set lamda 300.0
-set mu   100.0
+set lamda 50.0
+set mu   20.0
 
 set iat_udp [new RandomVariable/Exponential]
 $iat_udp set avg_ [expr 1.0/$lamda]
@@ -33,7 +33,7 @@ set iat_tcp [new RandomVariable/Exponential]
 $iat_tcp set avg_ [expr 1.0/$lamda]
 
 set pktsize [new RandomVariable/Exponential]
-$pktsize set avg_ [expr 10000.0/$mu]
+$pktsize set avg_ [expr 10000.0/($mu)]
 
 set prob [new RandomVariable/Uniform]
 

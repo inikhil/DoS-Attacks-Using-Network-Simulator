@@ -17,7 +17,7 @@ time_interval=1;
  		gotime+= time_interval;
   		recv=0;
   	}
-	if (( event == "r") && ( pktType == "udp" ))
+	if (( event == "r") && (( pktType == "tcp" )||(pktType == "udp")))
 	{
  		recv++;
 	}

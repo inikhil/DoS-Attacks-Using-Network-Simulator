@@ -1,8 +1,8 @@
 BEGIN {
 recv=0;
-gotime = 1;
+gotime = 0.5;
 time = 0;
-time_interval=1;
+time_interval=0.5;
 }
 #body
 {
@@ -17,7 +17,7 @@ time_interval=1;
  		gotime+= time_interval;
   		recv=0;
   	}
-	if (( event == "d") && ( pktType == "udp" ) && (node_id == 3))
+	if (( event == "d") && (( pktType == "tcp" )||(pktType == "udp")) && (node_id == 3))
 	{
  		recv++;
 	}
