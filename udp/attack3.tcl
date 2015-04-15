@@ -84,6 +84,11 @@ $ns at 0.0 "$n5 label client"
 $n2 shape hexagon
 $n3 shape square
 
+# Monitoring queue
+
+set qmon [$ns monitor-queue $n2 $n3 [open qm.out w] 1.0];
+[$ns link $n2 $n3] queue-sample-timeout; 
+
 
 # Defining a Random Uniform Generator
 proc Random_Generator_Uniform {} {

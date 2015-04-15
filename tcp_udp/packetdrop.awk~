@@ -17,7 +17,7 @@ time_interval=0.5;
  		gotime+= time_interval;
   		recv=0;
   	}
-	if (( event == "d") && ( pktType == "tcp" ) && (node_id == 3))
+	if (( event == "d") && (( pktType == "tcp" )||(pktType == "udp")) && (node_id == 3))
 	{
  		recv++;
 	}

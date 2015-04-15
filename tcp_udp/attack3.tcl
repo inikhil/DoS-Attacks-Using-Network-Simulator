@@ -11,6 +11,7 @@ $ns trace-all $tracefile1
 
 # Open the NAM trace file
 set namfile [open out.nam w]
+set windowVsTime2 [open windowvstime.dat w]
 $ns namtrace-all $namfile
 
 # Define a 'finish' procedure
@@ -78,7 +79,7 @@ $ns queue-limit $n3 $n4 5
 $ns at 0.0 "$n2 label server"
 $ns at 0.0 "$n3 label router"
 $ns at 0.0 "$n0 label client"
-$ns at 0.0 "$n1 label client"
+$ns at 0.0 "$n1 label Attacker"
 $ns at 0.0 "$n4 label client"
 $ns at 0.0 "$n5 label client"
 
@@ -86,6 +87,11 @@ $ns at 0.0 "$n5 label client"
 
 $n2 shape hexagon
 $n3 shape square
+
+# Monitoring queue
+
+set qmon [$ns monitor-queue $n2 $n3 [open qm.out w] 1.0];
+[$ns link $n2 $n3] queue-sample-timeout; 
 
 
 # Defining a Random Uniform Generator
@@ -190,6 +196,15 @@ proc sendpacket_tcp {tm} {
 	}	 
 }
 
+# Printing the window size
+proc plotWindow {tcpSource file} {
+	global ns
+	set time 0.01
+	set now [$ns now]
+	set cwnd [$tcpSource set cwnd_]
+	puts $file "$now $cwnd"
+	$ns at [expr $now+$time] "plotWindow $tcpSource $file"
+}    
 
 #$ns rtproto DV
 
@@ -206,6 +221,7 @@ proc sendpacket_tcp {tm} {
 #$ns at 10.0 "$poisson stop"
 
 $ns at 0.0001 "sendpacket_udp"
+$ns at 0.0001 "plotWindow $tcp $windowVsTime2"
 $ns at 10.0001 "sendpacket_tcp 40"
 $ns at 60.0000 "sendpacket_tcp 90"
 

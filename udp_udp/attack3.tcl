@@ -81,7 +81,7 @@ $ns queue-limit $n3 $n4 5
 $ns at 0.0 "$n2 label server"
 $ns at 0.0 "$n3 label router"
 $ns at 0.0 "$n0 label client"
-$ns at 0.0 "$n1 label client"
+$ns at 0.0 "$n1 label Attacker"
 $ns at 0.0 "$n4 label client"
 $ns at 0.0 "$n5 label client"
 
@@ -89,6 +89,11 @@ $ns at 0.0 "$n5 label client"
 
 $n2 shape hexagon
 $n3 shape square
+
+# Monitoring queue
+
+set qmon [$ns monitor-queue $n2 $n3 [open qm.out w] 1.0];
+[$ns link $n2 $n3] queue-sample-timeout; 
 
 
 # Defining a Random Uniform Generator

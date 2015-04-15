@@ -11,6 +11,7 @@ $ns trace-all $tracefile1
 
 # Open the NAM trace file
 set namfile [open out.nam w]
+set windowVsTime2 [open windowvstime.dat w]
 $ns namtrace-all $namfile
 
 # Define a 'finish' procedure
@@ -53,7 +54,7 @@ $ns duplex-link $n3 $n5 0.2Mb 100ms DropTail
 
 
 # Setting node positions
-$ns duplex-link-op $n0 $n2 orient right-down
+$ns duplex-link-op $n0 $n2 orient right
 $ns duplex-link-op $n2 $n3 orient right
 $ns duplex-link-op $n3 $n4 orient right-up
 $ns duplex-link-op $n3 $n5 orient right-down
@@ -150,8 +151,19 @@ proc sendpacket_tcp {tm} {
 	}	 
 }
 
+proc plotWindow {tcpSource file} {
+	global ns
+	set time 0.01
+	set now [$ns now]
+	set cwnd [$tcpSource set cwnd_]
+	puts $file "$now $cwnd"
+	$ns at [expr $now+$time] "plotWindow $tcpSource $file"
+}    
+
+
 
 $ns at 0.0001 "sendpacket_udp"
+$ns at 0.0001 "plotWindow $tcp $windowVsTime2"
 
 #Call the finish procedure after 5 seconds of simulation time
 $ns at 100.0 "finish"

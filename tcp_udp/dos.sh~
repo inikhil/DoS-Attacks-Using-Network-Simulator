@@ -3,6 +3,8 @@ rm drop.dat
 rm systhroughput.dat
 rm linkthroughput.dat
 rm packetdrop.dat
+rm queuesize.dat
+rm waitqueue.dat
 #rm output.txt
 
 awk -f drop.awk out.tr > drop.dat
@@ -10,6 +12,19 @@ awk -f systhroughput.awk out.tr > systhroughput.dat
 awk -f linkthroughput.awk out.tr > linkthroughput.dat
 awk -f packetdrop.awk out.tr > packetdrop.dat
 #awk -f drop.awk out.tr > output.txt
+
+gnuplot << EOF
+	set term png
+	set output "windowvstime.png"
+	set xlabel "Time"
+	set ylabel "Window Size"
+	set title "Window Size vs Time"
+	#set xrange [0:100]
+	#set yrange [0:5]
+	set style data linespoints
+	plot "windowvstime.dat"
+EOF
+
 
 gnuplot << EOF
 	set term png
@@ -21,8 +36,6 @@ gnuplot << EOF
 	#set yrange [0:5]
 	set style data histograms
 	plot "packetdrop.dat" using 2
-	set style data linespoints
-	plot "packetdrop.dat"
 EOF
 
 

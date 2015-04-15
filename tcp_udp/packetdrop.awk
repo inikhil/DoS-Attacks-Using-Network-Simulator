@@ -1,8 +1,8 @@
 BEGIN {
 recv=0;
-gotime = 0.5;
+gotime = 1;
 time = 0;
-time_interval=0.5;
+time_interval=1;
 }
 #body
 {
