@@ -5,6 +5,7 @@ rm linkthroughput.dat
 rm packetdrop.dat
 rm queuesize.dat
 rm waitqueue.dat
+rm dropvsthroughput.dat
 #rm output.txt
 
 awk -f drop.awk out.tr > drop.dat
@@ -13,7 +14,20 @@ awk -f linkthroughput.awk out.tr > linkthroughput.dat
 awk -f packetdrop.awk out.tr > packetdrop.dat
 awk -f queuemonitor.awk qm.out > queuesize.dat
 awk -f waitqueue.awk qm.out > waitqueue.dat
+awk -f dropvsthroughput.awk out.tr > dropvsthroughput.dat
 #awk -f drop.awk out.tr > output.txt
+
+gnuplot << EOF
+	set term png
+	set output "dropvsthroughput.png"
+	set xlabel "Number of packets dropped"
+	set ylabel "Throughput"
+	set title "Throughput compared to number of packets dropped"
+	#set xrange [0:100]
+	#set yrange [0:5]
+	set style data linespoints
+	plot "dropvsthroughput.dat" smooth sbezier
+EOF
 
 gnuplot << EOF
 	set term png
@@ -73,8 +87,8 @@ gnuplot << EOF
 	set title "Throughput vs Time"
 	set xrange [0:100]
 	#set yrange [0:170]
-	set style data histograms
-	plot "systhroughput.dat" using 2
+	set style data linespoints
+	plot "systhroughput.dat" smooth csplines, "systhroughput.dat" smooth sbezier
 EOF
 
 gnuplot << EOF
@@ -85,8 +99,8 @@ gnuplot << EOF
 	set title "Throughput vs Time of link 2-3"
 	set xrange [0:100]
 	#set yrange [0:80]
-	set style data histograms
-	plot "linkthroughput.dat" using 2
+	set style data linespoints
+	plot "linkthroughput.dat" smooth csplines
 EOF
 
 
@@ -98,7 +112,7 @@ gnuplot << EOF
 	set title "Probability of packet being dropped"
 	#set xrange [0:100]
 	#set yrange [0:0.25]
-	set style data linespoints
+	set style data linespoints 
 	plot "drop.dat" 
 EOF
 

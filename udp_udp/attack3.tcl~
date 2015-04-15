@@ -81,7 +81,7 @@ $ns queue-limit $n3 $n4 5
 $ns at 0.0 "$n2 label server"
 $ns at 0.0 "$n3 label router"
 $ns at 0.0 "$n0 label client"
-$ns at 0.0 "$n1 label client"
+$ns at 0.0 "$n1 label Attacker"
 $ns at 0.0 "$n4 label client"
 $ns at 0.0 "$n5 label client"
 

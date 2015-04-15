@@ -23,8 +23,8 @@ proc finish {} {
 	exit 0
 }
 
-set lamda 300.0
-set mu   100.0
+set lamda 50.0
+set mu   20.0
 
 #set rg [new RNG]
 #$rg seed 0
