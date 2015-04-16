@@ -12,6 +12,7 @@ $ns trace-all $tracefile1
 
 # Open the NAM trace file
 set namfile [open out.nam w]
+set windowVsTime2 [open windowvstime.dat w]
 $ns namtrace-all $namfile
 
 # Define a 'finish' procedure
@@ -61,9 +62,10 @@ set n4 [$ns node]
 set n5 [$ns node]
 
 # Create links between nodes
+set band 0.2Mb
 $ns duplex-link $n0 $n2 0.5Mb 100ms DropTail
 $ns duplex-link $n1 $n2 0.5Mb 100ms DropTail
-$ns duplex-link $n2 $n3 0.3Mb 100ms DropTail
+$ns duplex-link $n2 $n3 $band 100ms DropTail
 $ns duplex-link $n3 $n4 0.2Mb 100ms DropTail
 $ns duplex-link $n3 $n5 0.2Mb 100ms DropTail
 
@@ -83,8 +85,8 @@ $ns duplex-link-op $n1 $n2 queuePos 0.5
 
 # Set Queue Sizes
 $ns queue-limit $n0 $n2 10
-$ns queue-limit $n1 $n2 15
-$ns queue-limit $n2 $n3 15
+$ns queue-limit $n1 $n2 10
+$ns queue-limit $n2 $n3 10
 $ns queue-limit $n3 $n4 5
 
 # Labelling
@@ -134,17 +136,17 @@ proc Random_Generator_Exponential {} {
 }
 
 # Setup a TCP connection
-set tcp [new Agent/UDP]
+set tcp [new Agent/TCP]
 $ns attach-agent $n0 $tcp
-set sink [new Agent/Null]
+set sink [new Agent/TCPSink]
 $ns attach-agent $n4 $sink
 $ns connect $tcp $sink
 $tcp set fid_ 1
 #$tcp set packetsize_ 552
 
-set tcp2 [new Agent/UDP]
+set tcp2 [new Agent/TCP]
 $ns attach-agent $n0 $tcp2
-set sink2 [new Agent/Null]
+set sink2 [new Agent/TCPSink]
 $ns attach-agent $n5 $sink2
 $ns connect $tcp2 $sink2
 $tcp2 set fid_ 1
@@ -188,10 +190,8 @@ proc sendpacket_udp {} {
 	$ns at [ expr $time + [$iat_udp value]] "sendpacket_udp"
 	set bytes [expr round ([$pktsize value])]
 	if [expr [$prob value] < 0.5] {
-		#puts "1"
 		$tcp send $bytes
 	} else {
-		#puts "2"
 		$tcp2 send $bytes
 	} 
 }
@@ -211,6 +211,15 @@ proc sendpacket_tcp {tm} {
 	}	 
 }
 
+# Printing the window size
+proc plotWindow {tcpSource file} {
+	global ns
+	set time 0.01
+	set now [$ns now]
+	set cwnd [$tcpSource set cwnd_]
+	puts $file "$now $cwnd"
+	$ns at [expr $now+$time] "plotWindow $tcpSource $file"
+}    
 
 #$ns rtproto DV
 
@@ -227,12 +236,10 @@ proc sendpacket_tcp {tm} {
 #$ns at 10.0 "$poisson stop"
 
 $ns at 0.0001 "sendpacket_udp"
+$ns at 0.0001 "plotWindow $tcp $windowVsTime2"
 $ns at 10.0001 "sendpacket_tcp 40"
 $ns at 60.0000 "sendpacket_tcp 90"
-#$ns at 90.0001 "$tcp1 stop"
-#$ns at 90.0001 "$tcp3 stop"
 
- 
 #Call the finish procedure after 5 seconds of simulation time
 $ns at 100.0 "finish"
 

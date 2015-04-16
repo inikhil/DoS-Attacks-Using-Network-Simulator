@@ -24,8 +24,8 @@ proc finish {} {
 	exit 0
 }
 
-set lamda 50
-set mu [lindex $argv 2]
+set lamda 50.0
+set mu   20.0
 
 set MyRng [new RNG]
 $MyRng seed 0
@@ -51,26 +51,23 @@ $MyRng3 seed 0
 set prob [new RandomVariable/Uniform]
 $prob use-rng $MyRng3
 
-
 # Create 6 nodes
 set n0 [$ns node]
-set n1 [$ns node]
 set n2 [$ns node]
 set n3 [$ns node]
 set n4 [$ns node]
 set n5 [$ns node]
 
 # Create links between nodes
+set band [lindex $argv 2]
 $ns duplex-link $n0 $n2 0.5Mb 100ms DropTail
-$ns duplex-link $n1 $n2 0.5Mb 100ms DropTail
-$ns duplex-link $n2 $n3 0.3Mb 100ms DropTail
+$ns duplex-link $n2 $n3 $band 100ms DropTail
 $ns duplex-link $n3 $n4 0.2Mb 100ms DropTail
 $ns duplex-link $n3 $n5 0.2Mb 100ms DropTail
 
 
 # Setting node positions
-$ns duplex-link-op $n0 $n2 orient right-down
-$ns duplex-link-op $n1 $n2 orient right-up
+$ns duplex-link-op $n0 $n2 orient right
 $ns duplex-link-op $n2 $n3 orient right
 $ns duplex-link-op $n3 $n4 orient right-up
 $ns duplex-link-op $n3 $n5 orient right-down
@@ -79,22 +76,19 @@ $ns duplex-link-op $n3 $n5 orient right-down
 # Set Queue positions
 $ns simplex-link-op $n2 $n3 queuePos 0.5
 $ns duplex-link-op $n0 $n2 queuePos 0.5
-$ns duplex-link-op $n1 $n2 queuePos 0.5
 
 # Set Queue Sizes
 $ns queue-limit $n0 $n2 10
-$ns queue-limit $n1 $n2 15
 $ns queue-limit $n2 $n3 15
 $ns queue-limit $n3 $n4 5
 
 # Labelling
 
-$ns at 0.0 "$n2 label server"
-$ns at 0.0 "$n3 label router"
-$ns at 0.0 "$n0 label client"
-$ns at 0.0 "$n1 label Attacker"
-$ns at 0.0 "$n4 label client"
-$ns at 0.0 "$n5 label client"
+$ns at 0.0001 "$n2 label server"
+$ns at 0.0001 "$n3 label router"
+$ns at 0.0001 "$n0 label client"
+$ns at 0.0001 "$n4 label client"
+$ns at 0.0001 "$n5 label client"
 
 # Shape
 
@@ -102,6 +96,7 @@ $n2 shape hexagon
 $n3 shape square
 
 # Monitoring queue
+
 set filenam [lindex $argv 1]
 set qmon [$ns monitor-queue $n2 $n3 [open $filenam w] 1.0];
 [$ns link $n2 $n3] queue-sample-timeout; 
@@ -149,38 +144,6 @@ $ns attach-agent $n5 $sink2
 $ns connect $tcp2 $sink2
 $tcp2 set fid_ 1
 
-#Setup a FTP over TCP connection
-#set pareto [new Application/Traffic/Pareto]
-#$pareto attach-agent $tcp
-#$pareto set PacketSize_ 1000
-#$pareto set burst_time 0.98
-#$pareto set idle_time 0.01
-#$pareto set rate_ 1000
-#$pareto set shape_ 2
-
-# Setup a UDP connection
-set tcp1 [new Agent/UDP]
-$ns attach-agent $n1 $tcp1
-set sink1 [new Agent/Null]
-$ns attach-agent $n4 $sink1
-$ns connect $tcp1 $sink1
-$tcp1 set fid_ 2
-
-set tcp3 [new Agent/UDP]
-$ns attach-agent $n1 $tcp3
-set sink3 [new Agent/Null]
-$ns attach-agent $n5 $sink3
-$ns connect $tcp3 $sink3
-$tcp3 set fid_ 2
-
-#set poisson [new Application/Traffic/Exponential]
-#$poisson attach-agent $tcp1
-#$poisson set interval_ 0.005
-#$poisson set PacketSize_ 100
-#$poisson set burst_time 0.0
-#$poisson set idle_time 0.01
-#$poisson set rate_ 100000000
-#$poisson set maxpkts_ 100
 
 proc sendpacket_udp {} {
 	global ns tcp iat_udp pktsize prob tcp2
@@ -211,26 +174,7 @@ proc sendpacket_tcp {tm} {
 	}	 
 }
 
-
-#$ns rtproto DV
-
-# If a link stops working
-#$ns rtmodel-at 0.3 down $n4 $n5
-#$ns rtmodel-at 2.0 up $n4 $n5
-#$ns rtmodel-at 2.0 down $n3 $n4
-#$ns rtmodel-at 3.5 up $n3 $n4
-
-#Schedule events for the CBR and FTP agents
-#$ns at 0.0 "$poisson start"
-#$ns at 0.0 "pareto start"
-#$ns at 10.0 "$pareto stop"
-#$ns at 10.0 "$poisson stop"
-
 $ns at 0.0001 "sendpacket_udp"
-$ns at 10.0001 "sendpacket_tcp 40"
-$ns at 60.0000 "sendpacket_tcp 90"
-#$ns at 90.0001 "$tcp1 stop"
-#$ns at 90.0001 "$tcp3 stop"
 
  
 #Call the finish procedure after 5 seconds of simulation time
