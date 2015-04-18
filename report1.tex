@@ -1,0 +1,183 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{amsthm,amssymb,mathrsfs,setspace}%amsmath, latexsym,footmisc
+
+\usepackage{pstcol}
+\usepackage{play}
+\usepackage{epsfig}
+\usepackage[top=1.5in, bottom=1.5in, left=1.2in, right=1in]{geometry}
+%\usepackage[grey,times]{quotchap}
+\usepackage[nottoc]{tocbibind}
+\usepackage{color}
+\usepackage{picture}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage[linktocpage=true]{hyperref}
+\usepackage[section]{placeins}
+%\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{url}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+%
+
+\input xy
+\xyoption{all}
+
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\definecolor{skyblue}{rgb}{0.53, 0.81, 0.92}
+\definecolor{lightred}{rgb}{0.90, 0.36, 0.36}
+\definecolor{darkkhaki}{rgb}{0.71, 0.51, 0.06}
+%\usepackage{lipsum}
+
+\lstset {
+	tabsize=4,
+	keywordstyle=\color{darkkhaki},
+	commentstyle=\color{blue},
+	showstringspaces=false,
+	stringstyle=\color{lightred},
+	frame=TLRB,
+	captionpos=b,
+	basicstyle=\small\sffamily
+}
+
+\hypersetup {
+	pdftoolbar=true,
+	pdfmenubar=true,
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=green,
+	filecolor=magenta,
+	urlcolor=cyan
+}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+%\pagenumbering{arabic} \setcounter{page}{1}
+
+% --------------- Title page -----------------------
+
+\begin{titlepage}
+\enlargethispage{3cm}
+
+\begin{center}
+
+\vspace*{-2cm}
+
+\textbf{\Large QUEUEING ANALYSIS FOR NETWORKS UNDER DoS ATTACK}
+
+\vfill
+
+ A Project Report Submitted \\
+ in Partial Fulfilment of the Requirements  \\
+  for the Degree of  \\[10pt]
+
+ {\Large \bf BACHELOR OF TECHNOLOGY}\\[5pt]
+ in \\
+ {\large \bf Mathematics and Computing}
+
+ \vfill
+
+{\large \emph{by}}\\[5pt]
+{\large\bf {Nikhil Agarwal}}\\[5pt]
+{\large (Roll No. 11012323)}
+
+\vfill
+\includegraphics[height=2.5cm]{iitglogo}
+
+\vspace*{0.5cm}
+
+{\em\large to the}\\[10pt]
+{\bf\large DEPARTMENT OF MATHEMATICS} \\[5pt]
+{\bf\large \mbox{INDIAN INSTITUTE OF TECHNOLOGY GUWAHATI}}\\[5pt]
+{\bf\large GUWAHATI - 781039, INDIA}\\[10pt]
+{\it\large \today}
+\end{center}
+
+\end{titlepage}
+
+\clearpage
+
+
+% --------------- Certificate page -----------------------
+\pagenumbering{roman} \setcounter{page}{2}
+\begin{center}
+{\Large{\bf{CERTIFICATE}}}
+\end{center}
+%\thispagestyle{empty}
+
+
+\noindent
+\hspace{1.5 cm}This is to certify that the work contained in this project report
+entitled \\
+ ``{\bf QUEUEING ANALYSIS FOR NETWORKS UNDER DoS ATTACK}" submitted by {\bf Nikhil Agarwal} ({\bf Roll No.: 11012323}) to Indian Institute of Technology Guwahati
+towards partial requirement of {\bf Bachelor of Technology} in Mathematics and Computing  has been carried out
+by him/her under my supervision and that it has not been submitted elsewhere
+for the award of any degree..
+
+\vspace{4cm}
+
+\noindent Guwahati - 781 039 \hfill (Dr. N. Selvaraju)
+
+\noindent \today \hfill Project Supervisor
+
+\clearpage
+
+% --------------- Abstract page -----------------------
+\begin{center}
+{\Large{\bf{ABSTRACT}}}
+\end{center}
+
+
+With the rapid development of information technology, internet has affected the people in all aspects such as public utilities, telecommunication, financial transaction and defense system, all depends on information technology and their security. By using latest technology and internet, attackers may perform malicious activities. Botnet is the most serious emerging threat. Botnet performs various kinds of malicious activities and one of them is Denial of Service. DoS degrades the performance of a network, disconnects the host and performs bandwidth depletion and resource depletion attack. The main aim of the project is to have queueing analysis of networks under such attacks i.e to understand how each parameter is affected under DoS attacks or to detect an attack in progress as soon as possible because the servers definitely have some mechanisms to store and process the requests. 
+
+\clearpage
+
+
+
+\tableofcontents
+\clearpage
+%\listoffigures
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =========== Main chapters starts here. Type in separate files and include the filename here. ==
+% ============================
+
+\input chapter11.tex
+
+\input chapter2.tex
+
+\input chapter3.tex
+
+\pagebreak
+\nocite{m1} \nocite{m2} \nocite{m3} \nocite{m4} \nocite{m5} \nocite{m6} \nocite{m7} \nocite{m8} \nocite{m9} 
+
+\bibliographystyle{ieeetr}
+\bibliography{a}
+
+\end{document}
+

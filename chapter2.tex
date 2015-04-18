@@ -1,0 +1,221 @@
+\chapter{The intrusion propagation and elimination model:}
+
+\section{Introduction:}
+
+As described in [1], written by P. Kammas, T. Komninos, Y.C. Stamatiou1, we study mathematical model for the co-evolution of the populations of virus and antivirus software modules based on a queue theoretical formulation. Our computer network is modeled as
+interconnected service centers (network of queues) with
+incoming/outgoing connections to the outside world. Each
+such service center is modeled as an M/M/1 queue servicing
+the agents that move within the network. These agents are
+the virus and antivirus agents that move in the network
+as network customers. The idea behind this model is that antivirus
+agents are simply users of all network resources and
+try to exploit all network servers in order to propagate further.
+Thus, this model provides a link between a network’s
+characteristics (e.g. queue policies, service times and server
+utilization) with the speed with which virus agents propagate.
+A further element of this model is the virus-antivirus
+agent interaction. The rule we adopt is simple: if an antivirus
+agent meets a virus agents then it kills the virus agent
+and then kills itself (i.e. the two agents annihilate) so as to reduce the network load progressively as more and more virus
+agents are eliminated. We are interested for the co-evolution
+of the populations of virus and antivirus software agents
+across the infected network when they follow this mode of
+interaction. We show that the distribution of the numbers of
+virus/antivirus in the network nodes can be written in a product
+form much like the solution of the open Jackson networks
+of M/M/1 queues
+
+\section{Basic Model Design}
+
+Our Computer Network is modeled as an open Jackson network(i.e having product form solution) with incoming/outgoing connections to the outside world. We have N nodes in our system and we model every node as an M/M/1 queue with infinite size, such that no packets rejection takes place. The service times of the queue follow the exponential distribution and the arrivals follow the Poisson distribution. It is assumed that the service time of the packet in each queue is independent of service time of packet at other queues. It is assumed that the packet transmission time to a network queue is the same for all queues and approximately equal to the inverse of the transmission speed of the link leading to the queue. It is also assumed that the service time of the packet in each queue is independent of service time of packet at other queues.  Whenever a packet is serviced at queue, it chooses the next node to visit with probability or exits the network with a certain probability which is almost similar to that of Markov routing techniques. The choice for the next node is predetermined hence the model allows deterministic routing. At any time any packet can enter from outside or from some other queue and can be transmitted to some other queue or out of the network. We use antivirus and virus agents in this model. They are just two different kind of customers where the malicious one can affect the network utilization of the other one. This model finds the probability of the network to be in certain state given the number of virus and antivirus agents. 
+
+\hspace{1 cm}The model parameters are:
+
+\begin{itemize}
+\item N: It denotes the number of queues in the network or the number of network nodes.
+
+\item $\lambda_i: $ This is the parameter of the Poisson distribution used to model the arrival of agents in the network. The model doesn't differentiate between virus and antivirus when they arrive at the network and, thus, are considered to form Poisson distribution with single parameter.
+
+\item $\mu_i: $ This is the parameter of the exponential distribution assumed for the service time of the $i^{th}$ queue i.e. service time for the queues follow exponential distribution. Since we have assumed service time is same for all the queues, so we denote it with this single parameter.
+
+\item $\rho_i: $ Studying the utilization of a queue is very necessary for studying the queuing theory which is equal to  $ {\lambda_i}/{\mu_i} $
+
+\item $(a_i, v_i, d_i): $ $a_i$ denotes number of antivirus and $v_i$ denotes number of virus agents where as $d_i$ denotes number of virus antivirus interactions at the $i^{th}$ queue, at equilibrium state.
+
+\item $Pr[a]: $ It denotes the probability that the job queued carries an antivirus agent. 
+
+\item $Pr[v]: $ It denotes the probability that the job queued carries a virus agent.
+
+\item $l_{ij}: $ It denotes  the rate at which jobs leave queue i and enters queue j. If $i=0$ it denotes that the job is coming from some outside source not from some other queue of the network. Similarly if $j=0$ it denotes that the job is going outside of the entire network not to some other queue in the network.
+
+\item $q_{ij}: $ It denotes the probability that a job leaves queue i entering queue j. If $i=0$ it denotes that the job is coming from some outside source not from some other queue of the network. Similarly if $j=0$ it denotes that the job is going outside of the entire network not to some other queue in the network.
+
+\item
+$\mathbf{n(t)}=((a_1(t),v_1(t),d_1(t)),...,(a_N(t),v_N(t),d_N(t)))$ 
+
+$\mathbf{n(t)}$ is the state vector and it consist of three tuples. Since we have N nodes in our network, each node has some $v_i$ number of viruses, $a_i$ number of antiviruses and $d_i$ number of interactions between viruses and antiviruses at time t. More precisely we can say that total number of viruses and antiviruses in state i should be $v_i+a_i+2d_i$.
+
+\item  The probability density function for the possible state vectors is defined as follows:
+$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N):t)} = Pr[\mathbf{n(t)}=((a_1,v_1,d_1),....,(a_N,v_N,d_N))]$
+
+\item The steady state distribution for the state vector $\mathbf{n(t)}$ is defined as follows:
+$$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N))} = \lim_{t\to\infty} P((a_1,v_1,d_1),.....,(a_N,v_N,d_N):t)$$
+
+\end{itemize}
+
+Our basic model looks somewhat like this: 
+
+\begin{figure}[H]
+		\href{https://www.netlab.tkk.fi/opetus/s383143/kalvot/E_qnets.pdf}
+		{\resizebox{1.0\linewidth}{!}{\includegraphics{figh}}}
+		\caption{{Basic Structure of our model (click on image for source)}}
+		\label{fig:figh}
+\end{figure}
+
+\section{Steady State Distribution}
+
+\begin{theorem}
+Given a computer network modeled as above i.e containing N nodes and each of the model parameters in the above described sense, the probability distribution function for the state vector in the steady state is given by:
+
+$$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N))} =      \prod_{i=1}^{N} (1-\rho_i){{\rho_i}^{a_i+v_i+2d_i}} $$
+\end{theorem}
+
+\begin{proof}
+We start the proof by enumerating the possible events that can occur during an infinitesimal small time interval $dt$ and will deal with each cases accordingly:
+
+\begin{itemize}
+\item \textbf{ If a job arrives in the network in some of it$'$s queues is given by: }
+
+For antivirus: $$\sum_{j=1}^{N}P_{((a_1,v_1,d_1),...,(a_{j}-1,v_j,d_j),...,(a_N,v_N,d_N):t)}l_{0j}Pr[a]dt$$ 
+For virus: $$\sum_{j=1}^{N}P_{((a_1,v_1,d_1),...,(a_j,v_{j}-1,d_j),...,(a_N,v_N,d_N):t)}l_{0j}Pr[v]dt$$
+
+Since $l_{0j}$ denotes the rate at which a job enters state j directly, we multiply it with corresponding probability of being a virus or an antivirus. Thus, as the antivirus enters the state j, $\textbf{n(t)}$ at state j changes from $(a_{j}-1,v_j,d_j)$ to $(a_j,v_j,d_j)$. Same thing happens for the virus also.
+
+\item \textbf{If a job leaves a queue and exits the network is given by:}
+
+For antivirus: $$\sum_{i=1}^{N}P_{((a_1,v_1,d_1),...,(a_{i}+1,v_i,d_i),...,(a_N,v_N,d_N):t)}\mu_{i}q_{i0}Pr[a]dt$$ 
+For virus: $$\sum_{i=1}^{N}P_{((a_1,v_1,d_1),...,(a_i,v_{i}+1,d_i),...,(a_N,v_N,d_N):t)}\mu_{i}q_{i0}Pr[v]dt$$
+
+$q_{i0}$ is the probability that after leaving state i, the job get out of the network and $\mu_i$ is the parameter for service time of $i_{th}$ queue. Thus multiplying this two along with the probability of virus or antivirus we get the probability of a job which leaves the queue and exits the network.
+
+\item \textbf{If a job leaves one queue and enters another queue within the network is given by:}
+
+For antivirus: $$\sum_{i=1}^{N}\sum_{j=1}^{N}P_{((a_1,v_1,d_1),...,(a_{i}+1,v_i,d_i),....,(a_{j}-1,v_j,d_j),..., (a_N,v_N,d_N):t)}\mu_i q_{ij}Pr[a]dt$$ 
+
+For virus:
+$$\sum_{i=1}^{N}\sum_{j=1}^{N}P_{((a_1,v_1,d_1),...,(a_{i},v_{i}+1,d_i),....,(a_{j},v_{j}-1,d_j),..., (a_N,v_N,d_N):t)}\mu_i q_{ij}Pr[v]dt$$ 
+
+Multiplying $\mu_{i}$ with $q_{ij}$ we get the probability for a job that moves from state i to state j along with the corresponding probability of being a virus or an antivirus.
+
+\item \textbf{ If a pair of antivirus-virus agents annihilate together is given by}
+
+$$\sum_{i=1}^{N}P_{((a_1,v_1,d_1),...,(a_{i}+1,v_{i}+1,d_{i}-1),...,(a_N,v_N,d_N):t)}{\mu_{i}}^{2}Pr[a]Pr[v]dt$$ 
+
+When one virus and antivirus combine with each other, $d_i$ increases by 1 and $a_i$ and $v_i$ decreases by 1. Thus, when we multiply probability of virus with that of antivirus along with their service time we get the probability of annihilation.
+
+\item \textbf{None of the above occurs is given by:}
+
+$$P_{((a_1,v_1,d_1),...,(a_{i},v_{i},d_{i}),...,(a_N,v_N,d_N):t)}(1-dt\sum_{j=1}^{N}(l_{0j}+\mu_j+{\mu_{j}}^{2}Pr[a]Pr[v]))$$ 
+
+Thus this probability is given by adding no job enters in a queue along with no annihilation and no job leaving the queue. Thus the probability of none of the above case occurring is given by subtracting it with 1.
+	
+\end{itemize}
+
+Now, we know that $$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N):t+dt)}$$ is given by adding the probability of all the above cases. In the last term when we open the bracket and take $$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N):t)}$$ to the left side and divide both sides by dt, and taking the limit as $dt \to 0 $, then we obtain the left side as
+
+$$ \frac{d}{dt}P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N):t)}  $$
+
+which becomes 0 because no variation of population occurs in steady state while on the right hand side we cancel out dt from each term. After making sum of the terms on the right hand side equal to 0, and substituting Theorem 2.2.1, case 1 for antivirus  becomes  
+	
+$$P_{((a_1,v_1,d_1),..(a_{j}-1,v_j,d_j)..., (a_N,v_N,d_N):t)} =  \frac{(1-\rho_j){{\rho_j}^{a_{j}-1+v_j+2d_j}} }{(1-\rho_j){{\rho_j}^{a_{j}+v_j+2d_j}}}$$
+
+$$P_{((a_1,v_1,d_1),..(a_{j}-1,v_j,d_j)..., (a_N,v_N,d_N):t)}= \frac{1}{\rho_j}$$
+
+Now substituting similarly for all other case we finally get
+
+$$\sum_{j=1}^{N}(l_{0j}+\mu_j+{\mu_{j}}^{2}Pr[a]Pr[v])=
+\sum_{j=1}^{N}\frac{l_{0j}Pr[a]}{\rho_j}
++\sum_{j=1}^{N}\frac{l_{0j}Pr[v]}{\rho_j}+
+\sum_{i=1}^{N}\mu_iq_{i0}\rho_iPr[a]+$$
+$$\sum_{i=1}^{N}\mu_iq_{i0}\rho_iPr[v]+
+\sum_{i=1}^{N}\sum_{j=1}^{N}\frac{\rho_i}{\rho_j}\mu_iq_{ij}Pr[a]+
+\sum_{i=1}^{N}\sum_{j=1}^{N}\frac{\rho_i}{\rho_j}\mu_iq_{ij}Pr[v]+{\mu_{i}}^{2}Pr[a]Pr[v]$$
+
+Since we want to look at only those queues which has either virus or an antivirus. Thus $Pr[a]+Pr[v]=1. $. Substituting this in the above equation, we are left with only four terms on the right hand side and now we analyze each of them.
+
+\begin{itemize}
+\item First term can be rewritten by substituting $\rho_j$ as:  $$\sum_{j=1}^{N}\frac{l_{0j}}{\rho_j}= \sum_{j=1}^{N}\frac{l_{0j}\mu_j}{\lambda_j}$$ 
+
+\item Second therm can be reduced to:
+\begin{equation}
+\sum_{i=1}^{N}\mu_iq_{i0}\rho_i = \sum_{i=1}^{N}
+\lambda_iq_{i0} = \sum_{i=1}^{N}
+\lambda_i(1-\sum_{j=1}^{N}q_{ij})=
+\sum_{i=1}^{N}\lambda_i-\sum_{i=1}^{N}
+\sum_{j=1}^{N}\lambda_iq_{ij}
+\end{equation}
+The first one follows from simply substituting $\mu_i\rho_i=\lambda_i$ while the second one is the probability that the job goes out of the system multiplied by $\lambda_i$. We find this probability by subtracting from 1 that the job goes to some other queue. The third one is just the multiplication of the terms.
+
+Summation of $\lambda_iq_{ij}$ over all i and j denotes that that the job arrives at the rate $\lambda_i$ and with probability $q_{ij}$ makes it's transition form queue i to queue j. So, it can also be written as the negation of it's going out of the system or annihilating. Thus we can write:
+\begin{equation}
+\sum_{j=1}^{N}\lambda_iq_{ij}=\sum_{i=1}^{N}\lambda_i-
+\sum_{i=1}^{N}l_{i0}-\sum_{i=1}^{N}{\mu_{i}}^{2}Pr[a]Pr[v]
+\end{equation}
+
+A process arriving at rate $\lambda_i$ either goes to some  other queue or it goes out of the system or it annihilates itself. So we can write: 
+$$\lambda_i=\sum_{j=0}^{N}l_{ij}+{\mu_{i}}^{2}Pr[a]Pr[v]$$ 
+
+Now calculating and substituting we get
+
+$$\sum_{i=1}^{N}\lambda_i=\sum_{i=1}^{N}
+\sum_{j=0}^{N}l_{ij}+\sum_{i=1}^{N}{\mu_{i}}^{2}Pr[a]Pr[v]$$ 
+
+$$\Rightarrow\sum_{i=0}^{N}\sum_{j=1}^{N}l_{ij}=\sum_{i=1}^{N}
+\sum_{j=0}^{N}l_{ij}+\sum_{i=1}^{N}{\mu_{i}}^{2}Pr[a]Pr[v] $$
+
+$$\Rightarrow\sum_{i=1}^{N}\sum_{j=1}^{N}l_{ij} + \sum_{j=1}^{N}l_{0j}=\sum_{i=1}^{N}
+\sum_{j=1}^{N}l_{ij}+\sum_{i=1}^{N}l_{i0}+\sum_{i=1}^{N}{\mu_{i}}^{2}Pr[a]Pr[v] $$
+
+$$\Rightarrow\sum_{j=1}^{N}l_{0j}=\sum_{i=1}^{N}l_{i0}
++\sum_{i=1}^{N}{\mu_{i}}^{2}Pr[a]Pr[v]$$
+
+Now substituting in eqn 2.2 we get,
+\begin{equation}
+\sum_{i=1}^{N}\sum_{j=1}^{N}\lambda_iq_{ij}=\sum_{i=1}^{N}\lambda_i
+-\sum_{j=1}^{N}l_{0j}
+\end{equation}
+Now substituting in eqn 2.1 we get, 
+\begin{equation}
+\sum_{i=1}^{N}\mu_iq_{i0}\rho_i=\sum_{i=1}^{N}\lambda_i-
+\sum_{i=1}^{N}\sum_{j=1}^{N}\lambda_iq_{ij}=
+\sum_{j=1}^{N}\l_{0j}
+\end{equation}
+\item Third term
+ 
+$$\sum_{i=1}^{N}\sum_{j=1}^{N}\frac{\rho_i}{\rho_j}\mu_iq_{ij}=\sum_{i=1}^{N}\sum_{j=1}^{N}\lambda_iq_{ij}
+\frac{\mu_j}{\lambda_j}$$
+
+Now substituting 2.3 we get 
+$$\sum_{j=1}^{N}\frac{\mu_j}{\lambda_j}(\lambda_j-\l_{0j})$$
+
+$$\Rightarrow\sum_{j=1}^{N}\mu_j- \sum_{j=1}^{N}\frac{\mu_j\l_{0j}}{\lambda_j}$$
+
+\end{itemize}
+
+Now when we add all of these four terms, first term cancels out with the last term of third term and we are left with 
+$$\sum_{j=1}^{N}l_{0j}+\sum_{j=1}^{N}\mu_j+\sum_{j=1}^{N}{\mu_{j}}^{2}Pr[a]Pr[v]$$
+
+This is equal to left hand side, thus our theorem is correct as it satisfies the steady state equation.
+
+\end{proof}
+
+\section{Properties and Assessment of our basic model:}
+
+In the above above described model, we have assumed that antivirus and virus agents enter the network as normal tasks as they need networks resources to serve their purpose. Both antivirus and virus agents destroy one another. Although more drastic elimination
+techniques can be used for the model, but this simple elimination rule provide some advantages like it can be mathematically solvable, we can detect how serious a virus can be in an network with similar server characteristics. The model doesn't deal with any complex differential equations for tracking the probability of antivirus and virus agents in a queue. The resulting probability
+distribution function for the described network state is quite simple and it can be easily computed and analysed by varying some parameters. In addition, each parameter plays some kind of role in the derivation and the dependency of the network and the queues on a particular parameter can be easily studied. In this case, we have assumed that one virus and one antivirus interacts, if one antivirus interacts with s viruses then our $d_i$ for queue i will be become $(1+s)d_i$ and corresponding probability distribution function will be given by
+
+$$P_{((a_1,v_1,d_1),.....,(a_N,v_N,d_N))} =      \prod_{i=1}^{N} (1-\rho_i){{\rho_i}^{a_i+v_i+(1+s)d_i}}$$
+
+Thus our described model is pretty simple to study and we will extend this model to study DoS attacks.

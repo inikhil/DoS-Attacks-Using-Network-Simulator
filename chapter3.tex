@@ -147,7 +147,7 @@ Here we study the system parameters in both presence and absence of attacker. We
 \subsubsection{Experimental Analysis and Results:}
 \medskip
 
-For simulation purpose we run 100 simulations to produce our results. We basically study five things: Expected Throughput, Expected probability of packet being dropped, Expected number of packets being dropped, Expected size of queue, Expected waiting time in a queue. The parameters, we vary to study these parameters are: time, Arrival Rate, Service Rate and Bandwidth. The parameters are studied in both presence and absence of attacker. 
+For simulation purpose we run 100 simulations to produce our results. We basically study five things: Expected Throughput, Expected probability of packet being dropped, Expected number of packets being dropped, Expected size of queue, Expected waiting time in a queue. The parameters, we vary to study the system are: time, Arrival Rate, Service Rate and Bandwidth. The parameters are studied in both presence and absence of attacker. 
   
 \subsubsection*{Fixed Arrival Rate, Service Rate and Bandwidth:}
 
@@ -275,7 +275,7 @@ Increase in arrival rate results in increase of number of packets which in resul
 
 \pagebreak
 
-For low values of service rate, expected number of packets dropped is very large. As the value of service rate increases, as soon as the packet arrives, it is served hence queue is almost empty and packet loss goes on decreasing and it almost goes to 0 for large value of service rate. Similar behaviour occurs for expected probability of packet being dropped. 
+For smaller values of service rate, expected number of packets dropped is very large. As the value of service rate increases, as soon as the packet arrives, it is served hence queue is almost empty and packet loss goes on decreasing and it almost goes to 0 for large value of service rate. Similar behaviour occurs for expected probability of packet being dropped. 
 
 \begin{figure}[H]
 		\centering
@@ -307,7 +307,7 @@ For low values of service rate, expected number of packets dropped is very large
 		\label{fig:figce}
 \end{figure}
 
-As the service rate increases, queue length decreases because the number of packets decreases in the system because the packets are served very quickly. Hence the waiting time also goes on decreasing. Queue length is almost full for snmall values of service rate. Without the presence of attacker, queue length is uniform through out time. Between 40.0 and 60.0 secs, when we stop the attacker queue length further goes down for small values of survival rate. For larger values of service rate, queue length is uniform through out time and hence it is almost 0.
+As the service rate increases, queue length decreases because the number of packets decreases in the system because the packets are served very quickly. Hence the waiting time also goes on decreasing. Queue length is almost full for small values of service rate. Without the presence of attacker, queue length is uniform through out time. Between 40.0 and 60.0 secs, when we stop the attacker queue length further goes down for small values of survival rate. For larger values of service rate, queue length is uniform through out time and hence it is almost 0.
 
 \begin{figure}[H]
 		\centering
@@ -380,7 +380,7 @@ system study becomes more complicated to study.
 
 \item \textbf{Link Description:} Each links have 100 ms propagation delay and 0.5Mbps link speed in a fixed Bandwidth case i.e Each links are of same length and Each link provides equal service.
 
-\item \textbf{Queue Description:} Our Queuing model follows M/D/1/K model i.e the arrival rate is exponential, service rate is uniform, single server and queue size is k. We fix our Queuing size to be 15.
+\item \textbf{Queue Description:} Our Queuing model follows M/D/1/K model i.e the arrival rate is exponential, service rate is uniform, single server and queue size is k. We fix our Queuing size to be 10.
 
 \item \textbf{Protocol Description:} Our client and attacker on the left hand side (as shown in figure ~\ref{fig:figg}) both connects with Transmission Control Protocol with both the clients on the right hand side. Each packet has a certain random probability which decides the receiver of the packet.
 
@@ -391,7 +391,7 @@ system study becomes more complicated to study.
 \subsubsection{Experimental Analysis and Results:}
 \medskip
 
-For simulation purpose we run 100 simulations to produce our results. We basically study five things: Expected Throughput, Expected probability of packet being dropped, Expected number of packets being dropped, Expected size of queue, Expected waiting time in a queue. The parameters, we vary to study these parameters are: time, Arrival Rate, Service Rate and Bandwidth. The parameters are studied in both presence and absence of attacker. 
+For simulation purpose we run 100 simulations to produce our results. We basically study five things: Expected Throughput, Expected probability of packet being dropped, Expected number of packets being dropped, Expected size of queue, Expected waiting time in a queue. The parameters, we vary to study the system are: time, Arrival Rate, Service Rate and Bandwidth. The parameters are studied in both presence and absence of attacker. 
   
 \subsubsection*{Fixed Arrival Rate, Service Rate and Bandwidth:}
 
@@ -451,4 +451,136 @@ If number of packets flowing through the system increases, system throughput inc
 	\label{fig:figaf1}
 \end{figure}
 
-For TCP connection, packets are send exponentially and if drop occurs half of that number of packets are send exponentially and then linear sending occurs. In absence of attacker, the pattern is similar 
+For TCP connection, packets are send exponentially and if drop occurs half of that number of packets are send exponentially and then linear sending occurs. In absence of attacker, the pattern is similar to the actual TCP result but as we introduce the attacker, TCP window size decreases, when we switch off the attacker between 40.0 and 60.0 there is linear increase in the number of packets until it gets dropped.
+
+\pagebreak
+
+\subsubsection*{Varying Arrival Rate, fixed Service Rate and Bandwidth:}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.6\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/pacdrop1}}
+		\caption{{Expected number of packets dropped in presence of Attacker Configuration varying Arrival Rate}}
+		\label{fig:figba1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.6\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/prdrop1}}
+		\caption{{Expected probability of packets dropped in presence of Attacker Configuration varying Arrival Rate}}
+		\label{fig:figbc1}
+\end{figure}
+
+
+As the arrival rate increases, expected number of packets being dropped goes on increasing. As the time increases, expected number of packets dropped also goes on increasing. When we switch off the attacker between 40 and 60 secs, packets dropped decreases so we find a buldge in our graph. Expected probability of packets being lost behave in a similar manner. Expected number of packets being dropped in case of UDP were thrice in comparision with TCP.
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.7\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/queuelen1}}
+		\caption{{Expected number of packets in queue in presence of Attacker Configuration varying Arrival Rate}}
+		\label{fig:figbd1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.6\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/waiting1}}
+		\caption{{Expected waiting time in presence of Attacker Configuration varying Arrival Rate}}
+		\label{fig:figbe1}
+\end{figure}
+
+As the arrival rate increases, expected queue length increases because the number of packets increases in the system. Hence the waiting time also goes on increasing. Here the expected queue length does not increase abruptly as that of in UDP connection. Similarly the average waiting time does not change much as the arrival rate increases because once the packets are dropped, TCP starts checking the congestion window and start retransmitting only one packet. Thus TCP congestion control mechanism helps the average waiting time and expected queue size to change uniformly with the increase in arrival rate. 
+
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.9\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/systhroughput1}}
+		\caption{{Expected Throughput in presence of Attacker Configuration varying Arrival Rate}}
+		\label{fig:figbf1}
+\end{figure}
+
+Increase in arrival rate results in increase of number of packets which in result increases the link utilisation. The link utilisation is almost half of that of UDP connection due to better flow and congestion control mechanism.
+
+\pagebreak
+
+\subsubsection*{Varying Service Rate, fixed Arrival Rate and Bandwidth:}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/pacdrop2}}
+		\caption{{Expected number of packets dropped in presence of Attacker Configuration varying Service Rate}}
+		\label{fig:figca1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.7\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/prdrop2}}
+		\caption{{Expected probability of packets dropped in presence of Attacker Configuration varying Service Rate}}
+		\label{fig:figcc1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/queuelen2}}
+		\caption{{Expected number of packets in queue in presence of Attacker Configuration varying Service Rate}}
+		\label{fig:figcd1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/waiting2}}
+		\caption{{Expected waiting time in presence of Attacker Configuration varying Service Rate}}
+		\label{fig:figce1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{1\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/systhroughput2}}
+		\caption{{Expected Throughput in presence of Attacker Configuration varying Service Rate}}
+		\label{fig:figcf1}
+\end{figure}
+
+For smaller values of service rate, packet drop occurs very rapidly. Due to presence of control mechanisms of TCP, packets send to the server reduces and hence the expected number of packets dropped also. As the value of service rate increases, packets are served quickly and hence the expectation of packet being dropped also decreases. So, both the graphs of expected number of packets being dropped and expected probability of packets being dropped is almost uniform through out the arrival rate and time. Similar logic holds true for expected queue length, average waiting time and system throughput. These results are very different from that of UDP connection and hence the packets dropped for smaller values of service rate for UDP connection is almost 2.5 times, system throughput for UDP is amost 1.5 times that of TCP connection.
+
+\pagebreak
+
+\subsubsection*{Varying Bandwidth, fixed Arrival Rate and Service Rate:}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/pacdrop3}}
+		\caption{{Expected number of packets dropped in presence of Attacker Configuration varying bandwidth}}
+		\label{fig:figdb1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.7\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/prdrop3}}
+		\caption{{Expected probability of packets dropped in presence of Attacker Configuration varying bandwidth}}
+		\label{fig:figdc1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/queuelen3}}
+		\caption{{Expected number of packets in queue in presence of Attacker Configuration varying bandwidth}}
+		\label{fig:figdd1}
+\end{figure}
+
+
+\begin{figure}[H]
+		\centering
+		\resizebox{0.8\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/waiting3}}
+		\caption{{Expected waiting time in presence of Attacker Configuration varying bandwidth}}
+		\label{fig:figde1}
+\end{figure}
+
+\begin{figure}[H]
+		\centering
+		\resizebox{1\linewidth}{!}{\includegraphics{../Codes/tcp_udp/Simulations/Results/systhroughput3}}
+		\caption{{Expected Throughput in presence of Attacker Configuration varying Bandwidth}}
+		\label{fig:figdf1}
+\end{figure}
+
+For smaller values of link Bandwidth, packet drop occurs very rapidly. Due to presence of control mechanisms of TCP, packets send to the server reduces and hence the expected number of packets dropped also. As the value of Bandwidth increases, packets are served quickly which results in sending large number of packets due to TCP mechanism. So, both the graphs of expected number of packets being dropped and expected probability of packets being dropped is almost uniform through out the arrival rate. Now at the time when attacker is switched on, more packets are generataed and the expected number of packet being dropped increases. Similar logic holds true for expected queue length, average waiting time and system throughput. Compared to UDP, expected number of packets being dropped is almost half and system throughput is almost one-fourth for the TCP.
+\pagebreak
+
